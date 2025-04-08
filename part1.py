@@ -123,6 +123,7 @@ def q8_example():
     raise NotImplementedError
 
 # If so, write a test that shows it passes the tests so far
+# (Otherwise, leave the code below as skipped and change the reason= annotation)
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
 def test_q8(x):
