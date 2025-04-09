@@ -54,25 +54,25 @@ def test_abs_1(x):
 
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
-def test_abs_2(x):
+def test_abs_2(x, y):
     # TODO
     raise NotImplementedError
 
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
-def test_abs_3(x, n):
+def test_abs_3(x, y):
     # TODO
     raise NotImplementedError
 
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
-def test_abs_4(l1, l2):
+def test_abs_4(x):
     # TODO
     raise NotImplementedError
 
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
-def test_abs_5(l1, l2):
+def test_abs_5(x, y):
     # TODO
     raise NotImplementedError
 
