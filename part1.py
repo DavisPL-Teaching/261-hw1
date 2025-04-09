@@ -85,6 +85,9 @@ B. Stronger and weaker specifications.
   That is, any program satisfying the first spec should satisfy the second.
 
 - The first specification should be true for abs() and the second should be false for abs().
+
+You may change the method signatures in test_abs_6_weaker and test_abs_6_stronger
+(as well as in the following part test_q8) if you would like to add additional parameters.
 """
 
 @pytest.mark.skip(reason="Unimplemented")
@@ -109,7 +112,7 @@ Now answer the following questions:
 ===== END OF Q7 ANSWER =====
 
 8. Is it possible to have an implementation of abs() that is different than the correct implementation, but still passes the same set of specs
-(i.e., passes all the specs we considered so far that passed for abs?
+(i.e., passes all the specs we considered so far that passed for abs)?
 If so, give an example, if not, state why not.
 
 ===== ANSWER Q8 BELOW =====
@@ -118,7 +121,7 @@ If so, give an example, if not, state why not.
 """
 
 # Example here
-def q8_example():
+def q8_example(x):
     # TODO
     raise NotImplementedError
 
