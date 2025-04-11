@@ -82,7 +82,7 @@ B. Stronger and weaker specifications.
 6. Write two of your own specifications for the abs() function which satisfy the following:
 
 - The first specification should be *weaker* than the second one.
-  That is, any program satisfying the first spec should satisfy the second.
+  That is, any program satisfying the second spec should satisfy the first.
 
 - The first specification should be true for abs() and the second should be false for abs().
 
@@ -147,10 +147,12 @@ on all possible inputs.
 The @given annotations are written for you.
 
 Clarification on "Completely describe the behavior of the function":
-this means that you should take the output of the function, and check that every piece of data in it was computed correctly.
+This is the concept of "full functional correctness" that we covered in class.
+Programmatically, this means that you should take the output of the function, and check that every piece of data in it was computed correctly.
 It may feel like you are re-implementing the logic of the function in some parts, that's OK.
 
-(Note: this is called "functional correctness" or "complete functional correctness" - in the context of program verification, it means verifying for every input that the output was computed correctly for that input.)
+Mathematically and in a verification context, this means that your spec would satisfy the following constraint:
+    forall x there exists a unique y such that for all functions f satisfying the spec, f(x) = y.
 """
 
 def pad_with_spaces(s, n):
