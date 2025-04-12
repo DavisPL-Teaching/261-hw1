@@ -50,7 +50,7 @@ You may also choose to use assume() statements also if you find them helpful.
     st.integers(min_value=0, max_value=1000),
 )
 def test_abs_1(x):
-    assert abs(x) >= x
+    assert abs(x) == x
 
 @pytest.mark.skip(reason="Unimplemented")
 # @given(...)
