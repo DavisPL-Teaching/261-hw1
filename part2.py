@@ -147,7 +147,7 @@ overlap directly, your function should create new variables for the point of ove
 Make sure you don't have a formula that is checking whether the rectangle corners overlap manually!
 
 10. Write a function rectangles_collide that checks whether
-two rectangles collide at any point in time.
+two rectangles collide at any point in time t >= 0.
 It should return a Python boolean (True or False).
 """
 

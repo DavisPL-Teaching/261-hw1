@@ -45,18 +45,20 @@ You will be asked to write two functions:
 
 1. pigeons_in_holes(m, n):
     Input:
-        m and n are Python integers.
-    Returns:
-        A specification that says that there are
-        m total pigeons in n holes.
+        m is a Python integer (the number of pigeons)
+        n is a Python integer (the number of holes)
 
-2. two_in_hole(n):
+    Returns:
+        A formula that says that there are m total pigeons in n holes.
+
+2. two_in_hole(m, n):
     Input:
-        n is a Python integer.
+        m is a Python integer (the number of pigeons)
+        n is a Python integer (the number of holes)
 
     Returns:
-        a specification that says that at least one hole
-        has at least two pigeons.
+        A formula that is true exactly when at least one hole has at least
+        two pigeons.
 
 There are test cases that will help check that
 your implementation is correct.
@@ -66,7 +68,7 @@ def pigeons_in_holes(m, n):
     # TODO
     raise NotImplementedError
 
-def two_in_hole(n):
+def two_in_hole(m, n):
     # TODO
     raise NotImplementedError
 
@@ -85,18 +87,18 @@ def test_pigeons_in_holes():
 
 @pytest.mark.skip
 def test_two_in_hole():
-    assert solve(two_in_hole(3)) == SAT
-    assert prove(two_in_hole(1)) == COUNTEREXAMPLE
+    assert solve(two_in_hole(3, 3)) == SAT
+    assert prove(two_in_hole(3, 1)) == COUNTEREXAMPLE
 
 @pytest.mark.skip
 def test_combined():
     assert solve(z3.And([
         pigeons_in_holes(1, 2),
-        two_in_hole(2),
+        two_in_hole(1, 2),
     ])) == UNSAT
     assert prove(z3.Implies(
         pigeons_in_holes(3, 2),
-        two_in_hole(2),
+        two_in_hole(3, 2),
     )) == PROVED
 
 """
