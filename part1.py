@@ -111,8 +111,9 @@ Now answer the following questions:
 
 ===== END OF Q7 ANSWER =====
 
-8. Is it possible to have an implementation of abs() that is different than the correct implementation, but still passes the same set of specs
-(i.e., passes all the specs we considered so far that passed for abs)?
+8. Is it possible to have an implementation of abs() that is different than the correct implementation (it should differ in a meaningful way on at least one input),
+but still passes the same set of specs
+(i.e., passes all the specs we considered so far that passed for abs, not including any xfail tests)?
 If so, give an example, if not, state why not.
 
 ===== ANSWER Q8 BELOW =====
@@ -280,6 +281,8 @@ from hypothesis import settings
 which we have added for the tests below.
 By default, only 100 examples are tested.
 
+Also, if you find anything that holds for all Python integers within a reasonable range that you tested, you may indicate so in the comments and use a Hypothesis bound like `@given(st.integers(min_value=-1_000_000, max_value=1_000_000))`. You don't have to test larger or lower than that.
+
 Remember to remove @pytest.mark.skip(reason="Unimplemented")
 once you have implemented each test.
 """
@@ -303,7 +306,7 @@ def test_c_to_f_v1(c):
 """
 13. Here is a more precise trick:
 
-For F to C, subtract 32, then divide by two, and let that result be x.
+For F to C, subtract 32, then divide by two (float division), and let that result be x.
 Then compute x / 10 (float division) and add it to x.
 Round the result to the nearest integer.
 Example:
@@ -311,7 +314,7 @@ Example:
 
 For C to F, multiply by 2, and let that result by x.
 Then compute x / 10 (integer division) and subtract it from x.
-Finally, add 32, and round to the nearest integer.
+Finally, add 32.
 Example:
 20 C -> 20 * 2 = 40 -> 40 / 10 = 4 -> 40 - 4 + 32 = 68 F.
 
