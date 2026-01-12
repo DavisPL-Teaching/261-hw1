@@ -1,0 +1,298 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% ECS 261 HW1 Problem Set
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+
+\usepackage[margin=1.5in]{geometry}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\newcommand{\visiblehref}[2]{\href{#1}{#2}\footnote{\url{#1}}}
+
+\begin{document}
+
+\title{HW1 Problem Set}
+\author{ECS 261}
+\date{Due: Wednesday, January 21, 2026}
+
+\maketitle
+
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   PROBLEM 1   %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item
+\begin{enumerate}[(a)]
+\item
+Consider the following absolute value function written in Python:
+\begin{verbatim}
+def abs(x):
+    if x >= 0:
+        return x
+    else:
+        return -x
+\end{verbatim}
+
+This problem will explore writing specifications for this simple function.
+Using Python functions and plain Python assertions, write executable specifications for the following properties. Each specification should have the following form, and assume that \texttt{x} and \texttt{y} are Python integers.
+The first spec is written for you.
+\begin{verbatim}
+def spec_abs_1(x):
+    assert abs(x) == x
+
+def spec_abs_2(x, y):
+    # your code here
+
+def spec_abs_3(x, y):
+    # your code here
+
+def spec_abs_4(x):
+    # your code here
+
+def spec_abs_5(x, y):
+    # your code here
+\end{verbatim}
+
+Properties:
+\begin{enumerate}[1.]
+\item If $x$ is greater than or equal to $0$, then the absolute value of $x$ is equal to $x$.
+
+\item If $x$ is less than $y$, then the absolute value of $x$ is less than the absolute value of $y$.
+
+\item If $x$ is equal to $y + 1$, then the absolute value of $x$ is equal to $1$ plus the absolute value of $y$.
+
+\item The absolute value applied twice (absolute value of the absolute value of $x$) is equal to the absolute value of $x$.
+
+\item The absolute value of $x + y$ is less than or equal to (the absolute value of $x$) + (the absolute value of $y$).
+\end{enumerate}
+
+\item
+Then, write tests for each of your five functions that test them on all integers \texttt{x} and \texttt{y} between $-100$ and $100$. Each test should be named \texttt{test\_abs\_<n>} and have no arguments. That is,
+\begin{verbatim}
+def test_abs_1():
+    # your code here
+
+# etc.
+\end{verbatim}
+
+Run your tests with \texttt{pytest hw1.py}. Which tests pass and which fail?
+If the property does not hold, add the pytest annotation to mark an expected failure:
+\begin{verbatim}
+@pytest.mark.xfail(reason="The property is not true")
+\end{verbatim}
+
+\item
+Come up with a spec and test for \texttt{abs} that is false, but happens to be true for integers between $-100$ and $100$. Write your spec and test and verify that this is indeed the case.
+(Make sure your test is not marked as an "expected failure", as it won't fail!)
+Then write a \texttt{test\_abs\_6\_fixed}, which increases the range of integers tested to fix the failure. Mark this one as an expected failure.
+Both tests should terminate within a few seconds.
+\begin{verbatim}
+def spec_abs_6(x):
+    # your code here
+
+def test_abs_6():
+    # your code here
+
+def test_abs_6_fixed():
+    # your code here
+\end{verbatim}
+
+Does this spec seem like a realistic case that might come up in practice? Why or why not?
+
+\item
+In a few sentences, comment on the effectiveness of this approach to testing. Is this more thorough than unit testing? What could go wrong?
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   PROBLEM 2   %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item
+This part will explore \emph{stronger} and \emph{weaker} specifications.
+Draw a graph containing your six specifications from Problem 1, together with the following three additional specifications:
+\begin{itemize}
+\item Spec 6: True
+\item Spec 7: False
+\item Spec 8: For $y = \texttt{abs}(x)$, either $y = x$ or $y = -x$; AND $y \ge 0$.
+\end{itemize}
+
+Your graph should contain $8$ nodes, labeled $1$ through $8$, corresponding to the $8$ specifications.
+Then draw an arrow from node $i$ to node $j$ if specification $i$ is \emph{stronger} than specification $j$.
+Include your graph in the output PDF.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   PROBLEM 3   %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item
+It is possible to write specifications in Z3, rather than just in plain Python tests.
+For example, here is the absolute value function, this time written in Z3:
+\begin{verbatim}
+def abs(x):
+    return z3.If(x >= 0, x, -x)
+\end{verbatim}
+
+This function returns a Z3 formula.
+We can then write specifications for Z3 functions,
+by asserting that the resulting formula is provable.
+The \texttt{helper.py} file contains some helper functions to help this process,
+including the \texttt{PROVED}, \texttt{FAILED}, and \texttt{COUNTEREXAMPLE}
+constants.
+For example, specification 1 from Question 1 can be asserted in Z3 as follows:
+\begin{verbatim}
+def test_abs_z3_1():
+    x = z3.Int('x')
+    spec = z3.Implies(x >= 0, abs(x) == x)
+    assert prove(spec) == PROVED
+\end{verbatim}
+
+If instead the specification was false, we would use:
+\begin{verbatim}
+    assert prove(spec) == COUNTEREXAMPLE
+\end{verbatim}
+
+\begin{enumerate}[(a)]
+\item
+Using this methodology, rewrite the following Python function which is used
+to update a player's level in a video game into
+Z3, then use Z3 to \emph{prove} that the assertion in the Python function always holds:
+that is, the player level will always be between 1 and 100.
+
+The idea is that once we have a proof, we can omit the assertion
+from production code, as it will always be true.
+You may assume as a precondition that the player level is previously
+between 1 and 100 when the function is called.
+
+\begin{verbatim}
+def update_player_level(player_level, delta):
+    if delta < 0:
+        result = player_level
+    elif player_level + delta > 100:
+        result = 100
+    else:
+        result = player_level + delta
+
+    # This line is the assertion that we want to prove
+    assert result >= 1 and result <= 100
+
+    return result
+
+def update_player_level_z3(player_level, delta):
+    # TODO
+    raise NotImplementedError
+
+@pytest.mark.skip
+def test_proving_assertion():
+    # TODO
+    raise NotImplementedError
+\end{verbatim}
+
+\item
+Based on this experience, do you think it would it be possible to
+automatically translate Python code to Z3 code to prove such assertions?
+Why or why not?
+
+\item
+What is one advantage and one drawback on the effectiveness of this approach to verifying specifications, compared to the testing approach in Question 1?
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   PROBLEM 4   %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item
+A \emph{source-to-source compiler} is a program that takes as input code written in a certain language, and produces as output code written in the same language.
+For example, we can consider source-to-source compilers that take code written in Python and produce output written in Python.
+Assume that any source-to-source compiler should preserve the semantics of the Python code on any input in the following sense: any source program $P$ on any input $x$ should have the same observable behavior as the compiled program $P'$ on input $x$, and should produce the same output.
+
+Using the definition of specification that we saw in class, prove or disprove the following statements:
+\begin{itemize}
+\item[(i)] Given any source-to-source compiler $C$ and any program $P$, and specification $\phi$, if $P$ satisfies $\phi$, then $C(P)$ must also satisfy $\phi$.
+\item[(ii)] Given any source-to-source compiler $C$ and any program $P$, and any functional correctness specification $\phi$, if $P$ satisfies $\phi$, then $C(P)$ must also satisfy $\phi$.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   PROBLEM 5   %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item
+The \emph{four numbers game} works as follows:
+First, I secretly think of two positive integers $x$ and $y$.
+I don't tell you what they are, but instead I give you four
+numbers:
+    $a, b, c, d$
+and tell you that they are the values of the sum, difference,
+product, and quotient ($x+y$, $x-y$, $xy$, and $x/y$), in an unknown order.
+Assume that the difference is positive and the quotient is a whole number.
+Can you figure out what $x$ and $y$ are?
+
+Examples:
+\begin{itemize}
+\item
+Four numbers: $20, 95, 105, 500$.
+\emph{Solution:} $x = 5$, $y = 100$.
+
+\item
+Four numbers: $2, 6, 18, 72$.
+\emph{Solution:} $x = 12, y = 6$.
+
+\item
+Four numbers: $0, 1, 1, 2$.
+\emph{Solution:} $x = 1, y = 1$.
+\end{itemize}
+
+\begin{enumerate}[(a)]
+\item
+Write a solver for this game using Z3. Your solver should be provided as two functions: the first function \texttt{q5a(a, b, c, d)} should, when given four integers $a, b, c, d$, return a solution $x, y$, if there is at least one solution, or \texttt{None} if there is no solution.
+Second, the function \texttt{q5\_run()} should provide an interactive version: it should prompt the user for 4 numbers, then display as output the correct answers \texttt{x} and \texttt{y}.
+
+We have provided a function \texttt{get\_solution}
+in \texttt{helper.py} that will be useful for this part.
+If the spec is satisfiable (SAT), it will return
+a solution that you can use to get the values of $x$ and $y$:
+\begin{verbatim}
+    x = Int('x')
+    x_val = get_solution(spec)[x]
+\end{verbatim}
+
+\item
+Write a second solver that this time, determines whether the output is unique.
+\texttt{q5b(a, b, c, d)} should return a Python string ``multiple'', ``unique'', or ``none'' depending on whether multiple solutions exist.
+Upate your \texttt{q5\_run} interactive version to also show the output of \texttt{q5b}.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{enumerate}
+
+\newpage
+
+\noindent
+\textbf{Submission instructions:}
+\begin{itemize}
+\item Upload your solutions (as a PDF) and your code (in Python) in Gradescope.
+\item Your PDF should be a single file \texttt{hw1.pdf}. If you use this LaTeX template to create your solutions, please remove the problem statements
+and include only your solutions.
+\item Your code should be a file \texttt{hw1.py}, together with \texttt{helper.py} and any other necessary helper files.
+It should include your solutions for parts 1, 3, and 5.
+\item Please include all of the function names and signatures as listed in the document above, and do not modify any function signatures. You are welcome to add additional functions and tests -- but if you do so, please include all additional tests only at the bottom of the file.
+\item If your code is correct, \texttt{pytest hw1.py} should run successfully without any errors (marked in red);
+instead, you should be using the annotation \texttt{pytest.mark.xfail} to mark tests that are expected to fail. These will show up in yellow.
+\end{itemize}
+
+\end{document}
