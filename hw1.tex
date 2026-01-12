@@ -125,12 +125,12 @@ In a few sentences, comment on the effectiveness of this approach to testing. Is
 This part will explore \emph{stronger} and \emph{weaker} specifications.
 Draw a graph containing your six specifications from Problem 1, together with the following three additional specifications:
 \begin{itemize}
-\item Spec 6: True
-\item Spec 7: False
-\item Spec 8: For $y = \texttt{abs}(x)$, either $y = x$ or $y = -x$; AND $y \ge 0$.
+\item Spec 7: True
+\item Spec 8: False
+\item Spec 9: For $y = \texttt{abs}(x)$, either $y = x$ or $y = -x$; AND $y \ge 0$.
 \end{itemize}
 
-Your graph should contain $8$ nodes, labeled $1$ through $8$, corresponding to the $8$ specifications.
+Your graph should contain $9$ nodes, labeled $1$ through $9$, corresponding to the $9$ specifications.
 Then draw an arrow from node $i$ to node $j$ if specification $i$ is \emph{stronger} than specification $j$.
 Include your graph in the output PDF.
 
@@ -152,7 +152,7 @@ by asserting that the resulting formula is provable.
 The \texttt{helper.py} file contains some helper functions to help this process,
 including the \texttt{PROVED}, \texttt{FAILED}, and \texttt{COUNTEREXAMPLE}
 constants.
-For example, specification 1 from Question 1 can be asserted in Z3 as follows:
+For example, specification 1 from Problem 1 can be asserted in Z3 as follows:
 \begin{verbatim}
 def test_abs_z3_1():
     x = z3.Int('x')
@@ -207,7 +207,7 @@ automatically translate Python code to Z3 code to prove such assertions?
 Why or why not?
 
 \item
-What is one advantage and one drawback on the effectiveness of this approach to verifying specifications, compared to the testing approach in Question 1?
+What is one advantage and one drawback on the effectiveness of this approach to verifying specifications, compared to the testing approach in Problem 1?
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
