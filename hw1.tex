@@ -217,7 +217,7 @@ What is one advantage and one drawback on the effectiveness of this approach to 
 \item
 A \emph{source-to-source compiler} is a program that takes as input code written in a certain language, and produces as output code written in the same language.
 For example, we can consider source-to-source compilers that take code written in Python and produce output written in Python.
-Assume that any source-to-source compiler should preserve the semantics of the Python code on any input in the following sense: any source program $P$ on any input $x$ should have the same observable behavior as the compiled program $P'$ on input $x$, and should produce the same output.
+Assume that any source-to-source compiler $C$ should preserve the semantics of the Python code on any input in the following sense: any source program $P$ on any input $x$ should have the same observable behavior as the compiled program $C(P)$ on input $x$, and should produce the same output.
 
 Using the definition of specification that we saw in class, prove or disprove the following statements:
 \begin{itemize}
