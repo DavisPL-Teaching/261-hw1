@@ -52,7 +52,8 @@ Using Python functions and plain Python assertions, write executable specificati
 The first spec is written for you.
 \begin{verbatim}
 def spec_abs_1(x):
-    assert abs(x) == x
+    if x >= 0:
+        assert abs(x) == x
 
 def spec_abs_2(x, y):
     # your code here
