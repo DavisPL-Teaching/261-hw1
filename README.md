@@ -1,6 +1,6 @@
 # ECS 261 Homework 1: Writing Specifications in Python and Z3
 
-## Due: Wednesday, January 21
+## Due: ~~Wednesday, January 21~~ Friday, January 23
 
 This homework is a problem set. Please see `hw1.pdf` for further instructions.
 
