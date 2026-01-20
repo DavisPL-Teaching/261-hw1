@@ -4,6 +4,8 @@
 
 This homework is a problem set. Please see `hw1.pdf` for further instructions.
 
+**Note:** Q5 is now optional. Please submit at least Q1-4.
+
 To submit the homework, you will upload your solutions as a PDF (`hw1.pdf`) and accompanying code (`hw1.py` plus any corresponding helper files) to Gradescope.
 
 ## Grading notes
