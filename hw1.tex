@@ -229,6 +229,8 @@ Using the definition of specification that we saw in class, prove or disprove th
 \item[(ii)] Given any source-to-source compiler $C$ and any program $P$, and any functional correctness specification $\phi$, if $P$ satisfies $\phi$, then $C(P)$ must also satisfy $\phi$.
 \end{itemize}
 
+For the purposes of this question, assume that \emph{observable behavior} includes I/O, any program state that is modified as a result of calling the function (e.g., mutation or global variables), system calls (filesystem or network I/O), and any other behavior that could be observed from calling the function as a black box, but not including running time or space usage.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%   PROBLEM 5   %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -261,7 +263,7 @@ Four numbers: $0, 1, 1, 2$.
 
 \begin{enumerate}[(a)]
 \item
-Write a solver for this game using Z3. Your solver should be provided as two functions: the first function \texttt{q5a(a, b, c, d)} should, when given four integers $a, b, c, d$, return a solution $x, y$, if there is at least one solution, or \texttt{None} if there is no solution.
+Write a solver for this game using Z3. Your solver should be provided as two functions: the first function \texttt{q5a(a, b, c, d)} should, when given four Python integers $a, b, c, d$, return a solution as Python integers $x, y$, if there is at least one solution, or (\texttt{None}, \texttt{None}) if there is no solution.
 Second, the function \texttt{q5\_run()} should provide an interactive version: it should prompt the user for 4 numbers, then display as output the correct answers \texttt{x} and \texttt{y}.
 
 We have provided a function \texttt{get\_solution}
@@ -275,7 +277,7 @@ a solution that you can use to get the values of $x$ and $y$:
 
 \item
 Write a second solver that this time, determines whether the output is unique.
-\texttt{q5b(a, b, c, d)} should return a Python string ``multiple'', ``unique'', or ``none'' depending on whether multiple solutions exist.
+\texttt{q5b(a, b, c, d, x, y)} should return a Python string ``multiple'', ``unique'', or ``none'' depending on whether multiple solutions exist - given the four Python integers and the output $(x, y)$ from part (a) (x, y will be (\texttt{None}, \texttt{None} if there was no solution from part (a)).
 Update your \texttt{q5\_run} interactive version to also show the output of \texttt{q5b}.
 \end{enumerate}
 
